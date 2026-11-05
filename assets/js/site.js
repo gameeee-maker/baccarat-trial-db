@@ -87,16 +87,16 @@
     });
     return tsLoading;
   }
-  var INPUT = 'width: 100%; box-sizing: border-box; border-radius: 10px; border: 1px solid #2A3B66; background: #0A0F1E; color: #E6EDFA; font-family: inherit; font-size: 15px;';
+  var INPUT = 'width: 100%; box-sizing: border-box; border-radius: 10px; border: 1px solid #3A5596; background: #060A16; color: #E6EDFA; font-family: inherit; font-size: 15px;';
   function mountComments(el) {
     if (el.getAttribute('data-ready')) return;
     el.setAttribute('data-ready', '1');
     var brand = el.getAttribute('data-brand'), label = el.getAttribute('data-label') || '';
     el.innerHTML =
       '<span style="font-family: \'Noto Serif TC\', \'Songti TC\', serif; font-size: 20px; font-weight: 700; color: #A9C6FF;">' + cmtEsc(label) + ' 訪客留言</span>' +
-      '<p style="margin: 0; font-size: 14px; line-height: 1.75; color: #9FB0D0;">免註冊、可匿名留言。為防止廣告與詐騙，留言中不可包含 LINE ID、網址或任何連結；新留言經審核後才會公開。</p>' +
+      '<p style="margin: 0; font-size: 14px; line-height: 1.75; color: #9FB0D0;">免註冊、可匿名留言。為防止廣告與詐騙，留言中不可包含 LINE ID、網址或任何連結；不當內容會被移除。</p>' +
       '<ul class="cmt-list" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px;"><li style="font-size: 15px; color: #9FB0D0;">留言載入中…</li></ul>' +
-      '<form class="cmt-form" novalidate style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #070B16; border: 1px solid #1D2945;">' +
+      '<form class="cmt-form" novalidate style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #101A36; border: 1px solid #2E4A8A;">' +
         '<label style="font-size: 14px; font-weight: 700; color: #DCE6F7;">暱稱（選填）<input name="nickname" maxlength="20" placeholder="匿名訪客" style="' + INPUT + ' height: 44px; padding: 0 14px; margin-top: 6px;"></label>' +
         '<label style="font-size: 14px; font-weight: 700; color: #DCE6F7;">留言內容<textarea name="content" rows="4" maxlength="300" required placeholder="分享你的試玩心得，例如連線穩定度、荷官互動、遊戲選擇……" style="' + INPUT + ' padding: 12px 14px; line-height: 1.7; resize: vertical; margin-top: 6px;"></textarea></label>' +
         '<div class="cmt-ts" style="min-height: 65px;"></div>' +
@@ -109,13 +109,13 @@
     var widgetId = null;
     ta.addEventListener('input', function () { count.textContent = ta.value.length + ' / 300 字'; });
     function show(text, ok) { msg.textContent = text; msg.style.color = ok ? '#9FE3C1' : '#FFB4A8'; }
-    function load() {
+    function load(fresh) {
       if (CMT_API.indexOf('__') === 0) { list.innerHTML = '<li style="font-size: 15px; color: #9FB0D0;">留言功能即將開放。</li>'; return; }
-      fetch(CMT_API + '/comments?brand=' + encodeURIComponent(brand)).then(function (r) { return r.json(); }).then(function (d) {
+      fetch(CMT_API + '/comments?brand=' + encodeURIComponent(brand) + (fresh ? '&t=' + Date.now() : '')).then(function (r) { return r.json(); }).then(function (d) {
         var items = (d && d.comments) || [];
-        if (!items.length) { list.innerHTML = '<li style="padding: 16px; border-radius: 14px; border: 1px dashed #2A3B66; font-size: 15px; color: #9FB0D0; text-align: center;">目前還沒有訪客留言，歡迎分享你的試玩心得。</li>'; return; }
+        if (!items.length) { list.innerHTML = '<li style="padding: 16px; border-radius: 14px; background: #101A36; border: 1px dashed #3A5596; font-size: 15px; color: #9FB0D0; text-align: center;">目前還沒有訪客留言，歡迎分享你的試玩心得。</li>'; return; }
         list.innerHTML = items.map(function (c) {
-          return '<li style="padding: 14px 16px; border-radius: 14px; background: #070B16; border: 1px solid #1D2945; display: flex; flex-direction: column; gap: 6px;"><span style="display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline;"><span style="font-size: 15px; font-weight: 700; color: #E6EDFA;">' + cmtEsc(c.nickname) + '</span><span style="font-size: 13px; color: #8D9AB3;">' + cmtEsc(String(c.created_at).slice(0, 10).replace(/-/g, '/')) + '</span></span><span style="font-size: 15px; line-height: 1.75; color: #C4CDDF; white-space: pre-line; overflow-wrap: anywhere;">' + cmtEsc(c.content) + '</span></li>';
+          return '<li style="padding: 14px 16px; border-radius: 14px; background: #132042; border: 1px solid #2E4A8A; border-left: 3px solid #5B8CFF; display: flex; flex-direction: column; gap: 6px;"><span style="display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline;"><span style="font-size: 15px; font-weight: 700; color: #E6EDFA;">' + cmtEsc(c.nickname) + '</span><span style="font-size: 13px; color: #8D9AB3;">' + cmtEsc(String(c.created_at).slice(0, 10).replace(/-/g, '/')) + '</span></span><span style="font-size: 15px; line-height: 1.75; color: #C4CDDF; white-space: pre-line; overflow-wrap: anywhere;">' + cmtEsc(c.content) + '</span></li>';
         }).join('');
       }).catch(function () { list.innerHTML = '<li style="font-size: 15px; color: #9FB0D0;">留言暫時無法載入，請稍後再試。</li>'; });
     }
@@ -138,7 +138,7 @@
           if (res.ok) {
             form.reset(); count.textContent = '0 / 300 字';
             show(res.d.status === 'published' ? '留言已送出，謝謝你的分享。' : '留言已送出，審核通過後就會顯示，謝謝你的分享。', true);
-            if (res.d.status === 'published') load();
+            if (res.d.status === 'published') load(true);
           } else { show(CMT_ERR[res.d && res.d.error] || CMT_ERR.server_error, false); }
         })
         .catch(function () { show(CMT_ERR.server_error, false); })
