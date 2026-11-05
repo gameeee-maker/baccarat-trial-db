@@ -55,6 +55,7 @@
   }
   bindCarousel('guide-track', 'guide-prev', 'guide-next');
   bindCarousel('tested-track', 'tested-prev', 'tested-next');
+  bindCarousel('more-track', 'more-prev', 'more-next');
 
 
   // ---------- Visitor comments (Cloudflare Worker + D1 + Turnstile) ----------
@@ -92,6 +93,7 @@
     if (el.getAttribute('data-ready')) return;
     el.setAttribute('data-ready', '1');
     var brand = el.getAttribute('data-brand'), label = el.getAttribute('data-label') || '';
+    var limit = parseInt(el.getAttribute('data-limit') || '0', 10), more = el.getAttribute('data-more') || '';
     el.innerHTML =
       '<span style="font-family: \'Noto Serif TC\', \'Songti TC\', serif; font-size: 20px; font-weight: 700; color: #A9C6FF;">' + cmtEsc(label) + ' 訪客留言</span>' +
       '<p style="margin: 0; font-size: 14px; line-height: 1.75; color: #9FB0D0;">免註冊、可匿名留言。為防止廣告與詐騙，留言中不可包含 LINE ID、網址或任何連結；不當內容會被移除。</p>' +
@@ -114,9 +116,11 @@
       fetch(CMT_API + '/comments?brand=' + encodeURIComponent(brand) + (fresh ? '&t=' + Date.now() : '')).then(function (r) { return r.json(); }).then(function (d) {
         var items = (d && d.comments) || [];
         if (!items.length) { list.innerHTML = '<li style="padding: 16px; border-radius: 14px; background: #101A36; border: 1px dashed #3A5596; font-size: 15px; color: #9FB0D0; text-align: center;">目前還沒有訪客留言，歡迎分享你的試玩心得。</li>'; return; }
+        var total = items.length;
+        if (limit && items.length > limit) items = items.slice(0, limit);
         list.innerHTML = items.map(function (c) {
           return '<li style="padding: 14px 16px; border-radius: 14px; background: #132042; border: 1px solid #2E4A8A; border-left: 3px solid #5B8CFF; display: flex; flex-direction: column; gap: 6px;"><span style="display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline;"><span style="font-size: 15px; font-weight: 700; color: #E6EDFA;">' + cmtEsc(c.nickname) + '</span><span style="font-size: 13px; color: #8D9AB3;">' + cmtEsc(String(c.created_at).slice(0, 10).replace(/-/g, '/')) + '</span></span><span style="font-size: 15px; line-height: 1.75; color: #C4CDDF; white-space: pre-line; overflow-wrap: anywhere;">' + cmtEsc(c.content) + '</span></li>';
-        }).join('');
+        }).join('') + (limit && total > limit && more ? '<li><a class="arrow-link" href="' + cmtEsc(more) + '" style="font-size: 15px; font-weight: 700;">查看全部 ' + total + ' 則留言 →</a></li>' : '');
       }).catch(function () { list.innerHTML = '<li style="font-size: 15px; color: #9FB0D0;">留言暫時無法載入，請稍後再試。</li>'; });
     }
     load();
@@ -160,9 +164,10 @@
   var TD = 'vertical-align: top; padding: 12px 16px;';
   function render(b) {
     var stars = b.stars.map(function (s) { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="' + s.fill + '" stroke="' + s.stroke + '" stroke-width="2" stroke-linejoin="round" aria-hidden="true">' + STAR + '</svg>'; }).join('');
-    var chips = b.games.map(function (g) { return '<span style="display: inline-flex; padding: 6px 12px; border-radius: 999px; background: #10204A; border: 1px solid #2A4489; font-size: 14px; color: #DCE6F7;">' + esc(g) + '</span>'; }).join('');
+    var games = '<p style="margin: 0; font-size: 15px; line-height: 1.8; color: #C4CDDF;">' + b.games.map(esc).join('、') + '</p>';
+    function miniStars(n) { var o = ''; for (var k = 1; k <= 5; k++) o += '<svg width="13" height="13" viewBox="0 0 24 24" fill="' + (k <= n ? '#E8A317' : 'none') + '" stroke="' + (k <= n ? '#E8A317' : '#8C99AD') + '" stroke-width="2" stroke-linejoin="round" aria-hidden="true">' + STAR + '</svg>'; return '<span style="display: flex; gap: 1px; margin-top: 4px;">' + o + '</span>'; }
     var rows = b.rows.map(function (r) {
-      return '<tr style="border-top: 1px solid #1D2945;"><th scope="row" style="text-align: left; ' + TD + ' font-weight: 500;">' + esc(r.name) + '</th><td data-label="評分" style="' + TD + ' font-weight: 700; white-space: nowrap;">' + esc(r.score) + '</td><td data-label="實測說明" style="' + TD + ' line-height: 1.7; color: #C4CDDF;">' + esc(r.note) + '</td></tr>';
+      return '<tr style="border-top: 1px solid #1D2945;"><th scope="row" style="text-align: left; ' + TD + ' font-weight: 500;">' + esc(r.name) + '</th><td data-label="評分" style="' + TD + ' font-weight: 700; white-space: nowrap;">' + esc(r.score) + miniStars(parseInt(r.score, 10) || 0) + '</td><td data-label="實測說明" style="' + TD + ' line-height: 1.7; color: #C4CDDF;">' + esc(r.note) + '</td></tr>';
     }).join('');
     function box(title, items) {
       if (!items || !items.length) return '';
@@ -179,11 +184,11 @@
         '<button type="button" data-close aria-label="關閉視窗" style="flex: 0 0 44px; height: 44px; border-radius: 10px; border: 1px solid #2A3B66; background: transparent; color: #E6EDFA; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>' +
       '</div>' +
       '<p style="margin: 0; font-size: 16px; line-height: 1.8; color: #C4CDDF;">' + esc(b.desc) + '</p>' +
-      '<div style="display: flex; flex-direction: column; gap: 12px;"><h3 style="margin: 0; font-family: ' + SERIF + '; font-size: 18px; font-weight: 700; color: #A9C6FF;">遊戲選單</h3><div style="display: flex; flex-wrap: wrap; gap: 8px;">' + chips + '</div>' + (b.menuNote ? '<p style="margin: 0; font-size: 14px; line-height: 1.7; color: #8D9AB3;">' + esc(b.menuNote) + '</p>' : '') + '</div>' +
-      '<div style="border: 1px solid #1D2945; border-radius: 14px; overflow: hidden;"><table class="rwd" style="width: 100%; border-collapse: collapse; font-size: 15px;"><thead><tr style="background: #0E1630; color: #A9C6FF;"><th scope="col" style="text-align: left; padding: 12px 16px;">評測項目</th><th scope="col" style="text-align: left; padding: 12px 16px;">評分</th><th scope="col" style="text-align: left; padding: 12px 16px;">實測說明</th></tr></thead><tbody>' + rows +
+      '<div style="display: flex; flex-direction: column; gap: 12px;"><h3 style="margin: 0; font-family: ' + SERIF + '; font-size: 18px; font-weight: 700; color: #A9C6FF;">遊戲選單</h3>' + games + '' + (b.menuNote ? '<p style="margin: 0; font-size: 14px; line-height: 1.7; color: #8D9AB3;">' + esc(b.menuNote) + '</p>' : '') + '</div>' +
+      '<div style="border: 1px solid #1D2945; border-radius: 14px; overflow: hidden;"><table class="tight" style="width: 100%; border-collapse: collapse; font-size: 15px;"><thead><tr style="background: #0E1630; color: #A9C6FF;"><th scope="col" style="text-align: left; padding: 12px 16px;">評測項目</th><th scope="col" style="text-align: left; padding: 12px 16px;">評分</th><th scope="col" style="text-align: left; padding: 12px 16px;">實測說明</th></tr></thead><tbody>' + rows +
         '<tr style="border-top: 2px solid #3A5596; background: #0E1630;"><th scope="row" style="text-align: left; padding: 12px 16px; font-weight: 900;">總評分</th><td data-label="評分" style="padding: 12px 16px; font-weight: 900; white-space: nowrap;">' + esc(b.ratingText) + '</td><td data-label="說明" style="padding: 12px 16px; color: #C4CDDF;">我的綜合評分，詳見<a href="methodology/" style="color: #A9C6FF;">評測方法</a></td></tr></tbody></table></div>' +
       (pc ? '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px;">' + pc + '</div>' : '') +
-      '<div class="cmt" data-brand="' + esc(b.id) + '" data-label="' + esc(b.label) + '" style="border-top: 1px solid #1D2945; padding-top: 20px; display: flex; flex-direction: column; gap: 12px;"></div>' +
+      '<div class="cmt" data-limit=\"3\" data-more=\"' + esc(b.page) + '#comments-' + esc(b.id) + '\" data-brand="' + esc(b.id) + '" data-label="' + esc(b.label) + '" style="border-top: 1px solid #1D2945; padding-top: 20px; display: flex; flex-direction: column; gap: 12px;"></div>' +
       '<a href="' + esc(b.page) + '" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border-radius: 999px; background: #2D63E6; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 700;">查看 ' + esc(b.label) + ' 完整試玩心得</a>' +
     '</div>';
   }

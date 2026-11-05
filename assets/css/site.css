@@ -3,8 +3,9 @@
 .mnav[hidden]{display:none !important}
 .arrow-link{color:#C9DBFF !important;text-decoration:none}
 .arrow-link:hover{color:#FFFFFF !important}
-.crumb{display:inline-flex !important;flex-wrap:wrap;align-items:center;gap:2px 4px;width:fit-content;max-width:100%;box-sizing:border-box;padding:6px 14px;border-radius:999px;background:rgba(4,9,26,.78) !important;border:1px solid rgba(120,160,255,.28);color:#DCE6F7 !important;text-shadow:none !important}
-.crumb a{color:#A9C6FF !important}
+.crumb{display:inline-flex !important;flex-wrap:wrap;align-items:center;gap:2px 4px;align-self:flex-end;margin-left:auto;width:fit-content;max-width:100%;box-sizing:border-box;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.05) !important;border:1px solid rgba(255,255,255,.10);color:#9FB0D0 !important;font-size:13px !important;text-shadow:none !important}
+.crumb a{color:#C9D6EE !important;text-decoration:none}
+.crumb a:hover{color:#FFFFFF !important}
 .fit{white-space:nowrap;font-size:min(var(--fs),calc((100vw - 48px) / var(--n))) !important}
 .h1-bar{display:none}
 .h1-sub{display:block;margin-top:10px}
@@ -47,3 +48,22 @@
   table.rwd td{padding:3px 0 !important;white-space:normal !important}
   table.rwd td::before{content:attr(data-label) "：";color:#8FB2FF;font-weight:700}
 }
+
+/* hamburger groups */
+.mgrp{border-bottom:1px solid #1D2945}
+.mgrp>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:14px 2px;font-weight:700;font-size:16px;color:#E6EDFA;cursor:pointer}
+.mgrp>summary::-webkit-details-marker{display:none}
+.mgrp>summary svg{transition:transform .2s}
+.mgrp[open]>summary svg{transform:rotate(180deg)}
+.msub{display:flex;flex-direction:column;padding:0 0 10px}
+.msub a{display:block;padding:9px 0 9px 14px;color:#C4CDDF;text-decoration:none;font-size:15px}
+.mlink{display:block;padding:14px 2px;border-bottom:1px solid #1D2945;color:#E6EDFA;text-decoration:none;font-weight:700;font-size:16px}
+/* banner readability without glow */
+.banner-bg{background:linear-gradient(90deg,rgba(2,4,12,.10) 0%,rgba(2,4,12,.45) 48%,rgba(2,4,12,.72) 100%),url("../img/banner-arc.jpg") 0% 38%/145% 118% no-repeat #04060C !important}
+@media (max-width: 768px){
+  .banner-bg{background:linear-gradient(180deg,rgba(2,4,12,.55) 0%,rgba(2,4,12,.70) 100%),url("../img/banner-arc.jpg") 0% 38%/cover no-repeat #04060C !important}
+  table.tight{font-size:14px !important}
+  table.tight th,table.tight td{padding:10px 8px !important}
+  table.tight tbody th{white-space:nowrap}
+}
+.more-car>a{flex:0 0 230px !important}
