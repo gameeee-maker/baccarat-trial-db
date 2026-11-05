@@ -11,10 +11,11 @@
 - `/brands/`：試玩平台總覽；`/brands/{dg,mt,t9,allbet,sa,db,wm,og}/`：品牌評測頁
 - `/authors/lin-zi-xuan/`：作者頁
 - `/methodology/`、`/disclosure/`、`/about/`、`/contact/`：信任頁
-- `/guide/…`、`/safety/…`、`/privacy/`：內容準備中（已設 noindex，不在 sitemap 中）
+- `/guide/…`、`/safety/…`、`/privacy/`：教學、安全與隱私權內容頁
 - `404.html`：使用根目錄絕對路徑，在自訂網域下才能正確顯示樣式
 
 ## 注意
+- 手機版（≤860px）使用漢堡選單；樣式集中在 `assets/css/site.css`
 - 站內連結皆使用相對路徑，在預設網址與自訂網域下都能運作。
 - 訪客留言目前顯示「即將開放」。靜態主機無法儲存留言，需要另外接留言後端（例如 Waline），並開啟先審後發與關鍵字過濾（LINE、網址、連結）。
 - 外部連結只出現在各頁「資料來源」，皆為 `rel="nofollow noopener"`。
