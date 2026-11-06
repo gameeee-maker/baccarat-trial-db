@@ -59,7 +59,7 @@
 .msub a{display:block;padding:9px 0 9px 14px;color:#C4CDDF;text-decoration:none;font-size:15px}
 .mlink{display:block;padding:14px 2px;border-bottom:1px solid #1D2945;color:#E6EDFA;text-decoration:none;font-weight:700;font-size:16px}
 /* banner readability without glow */
-.banner-bg{background:linear-gradient(90deg,rgba(2,4,12,.10) 0%,rgba(2,4,12,.45) 48%,rgba(2,4,12,.72) 100%),url("../img/banner-arc.jpg") 0% 38%/145% 118% no-repeat #04060C !important}
+.banner-bg{background:linear-gradient(90deg,rgba(10,36,130,.30) 0%,rgba(6,22,92,.42) 45%,rgba(2,6,26,.74) 100%),url("../img/banner-arc.jpg") 0% 38%/145% 118% no-repeat #04060C !important}
 @media (max-width: 768px){
   .banner-bg{background:linear-gradient(180deg,rgba(2,4,12,.55) 0%,rgba(2,4,12,.70) 100%),url("../img/banner-arc.jpg") 0% 38%/cover no-repeat #04060C !important}
   table.tight{font-size:14px !important}
@@ -96,13 +96,13 @@ main > article,main > section{position:relative;z-index:1}
 /* ===== flare bands (試玩之前 / 關於我) ===== */
 .band{position:relative;overflow:hidden;background:linear-gradient(165deg,#02040B 0%,#061232 42%,#0A1D58 72%,#040917 100%);border-top:1px solid rgba(120,160,255,.14);border-bottom:1px solid rgba(120,160,255,.14)}
 .band::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
-  linear-gradient(108deg,transparent calc(38% - .6px),rgba(175,210,255,.09) 38%,transparent calc(38% + .6px)),
-  linear-gradient(108deg,transparent calc(71% - .5px),rgba(175,210,255,.06) 71%,transparent calc(71% + .5px)),
-  linear-gradient(0deg,transparent calc(82% - .5px),rgba(175,210,255,.05) 82%,transparent calc(82% + .5px))}
-.band::after{content:"";position:absolute;pointer-events:none;z-index:0;width:920px;height:920px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.80) 0,rgba(205,228,255,.55) 2.2%,rgba(120,178,255,.34) 8%,rgba(44,110,245,.20) 20%,rgba(14,40,140,.10) 36%,rgba(3,5,11,0) 58%)}
-.band-safety::after{left:-300px;bottom:-380px}
-.band-about::after{right:-300px;top:-380px}
+  linear-gradient(108deg,transparent calc(30% - .7px),rgba(175,210,255,.16) 30%,transparent calc(30% + .7px)),
+  linear-gradient(108deg,transparent calc(33% - .5px),rgba(175,210,255,.08) 33%,transparent calc(33% + .5px)),
+  linear-gradient(72deg,transparent calc(76% - .6px),rgba(175,210,255,.12) 76%,transparent calc(76% + .6px)),
+  linear-gradient(0deg,transparent calc(86% - .5px),rgba(175,210,255,.08) 86%,transparent calc(86% + .5px))}
+.band::after{content:"";position:absolute;pointer-events:none;z-index:0;width:1500px;height:1100px;border-radius:50%;filter:blur(40px);background:radial-gradient(ellipse at center,rgba(140,190,255,.30) 0,rgba(80,140,250,.24) 16%,rgba(36,90,225,.16) 34%,rgba(14,40,140,.08) 52%,rgba(3,5,11,0) 70%)}
+.band-safety::after{left:-620px;bottom:-560px}
+.band-about::after{right:-620px;top:-540px}
 .spark{position:absolute;z-index:0;pointer-events:none;opacity:.85;filter:drop-shadow(0 0 6px rgba(160,200,255,.9))}
 .band-safety .spark{left:150px;bottom:72px}
 .band-about .spark{right:150px;top:72px}
@@ -113,5 +113,21 @@ main > article,main > section{position:relative;z-index:1}
   .band-safety .spark{left:16px;bottom:40px}
   .band-about .spark{right:20px;top:26px}
   /* mobile banner: keep the arc light, add saturation (cobalt tint instead of grey) */
-  .banner-bg{background:linear-gradient(180deg,rgba(6,26,110,.42) 0%,rgba(5,18,78,.60) 45%,rgba(3,8,30,.90) 100%),url("../img/banner-arc.jpg") 0% 38%/cover no-repeat #04060C !important}
+  .banner-bg{background:linear-gradient(180deg,rgba(8,30,120,.34) 0%,rgba(6,22,92,.52) 45%,rgba(3,8,30,.88) 100%),url("../img/banner-arc.jpg") 58% 40%/cover no-repeat #04060C !important}
+}
+
+/* sweeping colour block (ref: flame-like blue extension) */
+.sweep{position:absolute;pointer-events:none;z-index:0;width:520px;height:1500px;border-radius:50%;filter:blur(40px);opacity:.95;
+  background:linear-gradient(180deg,rgba(3,5,11,0) 0%,rgba(20,60,200,.55) 38%,rgba(60,130,255,.55) 62%,rgba(170,210,255,.40) 82%,rgba(3,5,11,0) 100%)}
+.band-safety .sweep{left:-250px;top:-360px;transform:rotate(-16deg)}
+.band-about .sweep{right:-250px;top:-420px;transform:rotate(14deg)}
+.spark{display:none}
+@media (max-width: 768px){
+  .band::before{opacity:.6}
+  .band::after{width:820px;height:640px}
+  .band-safety::after{left:-460px;bottom:-380px}
+  .band-about::after{right:-460px;top:-360px}
+  .sweep{width:300px;height:900px;opacity:.55}
+  .band-safety .sweep{left:-230px;top:-200px}
+  .band-about .sweep{right:-230px;top:-260px}
 }
