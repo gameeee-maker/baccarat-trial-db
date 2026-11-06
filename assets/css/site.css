@@ -93,3 +93,25 @@ main:has(> article)::before{width:560px;height:280px;right:-300px;top:520px;tran
 main:has(> article)::after{width:520px;height:260px;left:-300px;top:1500px;transform:rotate(18deg);background:radial-gradient(closest-side,rgba(60,130,255,.32),rgba(3,5,11,0))}
 main > article,main > section{position:relative;z-index:1}
 @media (max-width: 768px){main:has(> article)::before,main:has(> article)::after{opacity:.5}}
+/* ===== flare bands (試玩之前 / 關於我) ===== */
+.band{position:relative;overflow:hidden;background:linear-gradient(165deg,#02040B 0%,#061232 42%,#0A1D58 72%,#040917 100%);border-top:1px solid rgba(120,160,255,.14);border-bottom:1px solid rgba(120,160,255,.14)}
+.band::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
+  linear-gradient(108deg,transparent calc(38% - .6px),rgba(175,210,255,.09) 38%,transparent calc(38% + .6px)),
+  linear-gradient(108deg,transparent calc(71% - .5px),rgba(175,210,255,.06) 71%,transparent calc(71% + .5px)),
+  linear-gradient(0deg,transparent calc(82% - .5px),rgba(175,210,255,.05) 82%,transparent calc(82% + .5px))}
+.band::after{content:"";position:absolute;pointer-events:none;z-index:0;width:920px;height:920px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.80) 0,rgba(205,228,255,.55) 2.2%,rgba(120,178,255,.34) 8%,rgba(44,110,245,.20) 20%,rgba(14,40,140,.10) 36%,rgba(3,5,11,0) 58%)}
+.band-safety::after{left:-300px;bottom:-380px}
+.band-about::after{right:-300px;top:-380px}
+.spark{position:absolute;z-index:0;pointer-events:none;opacity:.85;filter:drop-shadow(0 0 6px rgba(160,200,255,.9))}
+.band-safety .spark{left:150px;bottom:72px}
+.band-about .spark{right:150px;top:72px}
+@media (max-width: 768px){
+  .band::after{width:560px;height:560px}
+  .band-safety::after{left:-300px;bottom:-320px}
+  .band-about::after{right:-300px;top:-300px}
+  .band-safety .spark{left:16px;bottom:40px}
+  .band-about .spark{right:20px;top:26px}
+  /* mobile banner: keep the arc light, add saturation (cobalt tint instead of grey) */
+  .banner-bg{background:linear-gradient(180deg,rgba(6,26,110,.42) 0%,rgba(5,18,78,.60) 45%,rgba(3,8,30,.90) 100%),url("../img/banner-arc.jpg") 0% 38%/cover no-repeat #04060C !important}
+}
