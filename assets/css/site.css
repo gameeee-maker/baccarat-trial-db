@@ -93,41 +93,23 @@ main:has(> article)::before{width:560px;height:280px;right:-300px;top:520px;tran
 main:has(> article)::after{width:520px;height:260px;left:-300px;top:1500px;transform:rotate(18deg);background:radial-gradient(closest-side,rgba(60,130,255,.32),rgba(3,5,11,0))}
 main > article,main > section{position:relative;z-index:1}
 @media (max-width: 768px){main:has(> article)::before,main:has(> article)::after{opacity:.5}}
-/* ===== flare bands (試玩之前 / 關於我) ===== */
-.band{position:relative;overflow:hidden;background:linear-gradient(165deg,#02040B 0%,#061232 42%,#0A1D58 72%,#040917 100%);border-top:1px solid rgba(120,160,255,.14);border-bottom:1px solid rgba(120,160,255,.14)}
-.band::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
-  linear-gradient(108deg,transparent calc(30% - .7px),rgba(175,210,255,.16) 30%,transparent calc(30% + .7px)),
-  linear-gradient(108deg,transparent calc(33% - .5px),rgba(175,210,255,.08) 33%,transparent calc(33% + .5px)),
-  linear-gradient(72deg,transparent calc(76% - .6px),rgba(175,210,255,.12) 76%,transparent calc(76% + .6px)),
-  linear-gradient(0deg,transparent calc(86% - .5px),rgba(175,210,255,.08) 86%,transparent calc(86% + .5px))}
-.band::after{content:"";position:absolute;pointer-events:none;z-index:0;width:1500px;height:1100px;border-radius:50%;filter:blur(40px);background:radial-gradient(ellipse at center,rgba(140,190,255,.30) 0,rgba(80,140,250,.24) 16%,rgba(36,90,225,.16) 34%,rgba(14,40,140,.08) 52%,rgba(3,5,11,0) 70%)}
-.band-safety::after{left:-620px;bottom:-560px}
-.band-about::after{right:-620px;top:-540px}
-.spark{position:absolute;z-index:0;pointer-events:none;opacity:.85;filter:drop-shadow(0 0 6px rgba(160,200,255,.9))}
-.band-safety .spark{left:150px;bottom:72px}
-.band-about .spark{right:150px;top:72px}
-@media (max-width: 768px){
-  .band::after{width:560px;height:560px}
-  .band-safety::after{left:-300px;bottom:-320px}
-  .band-about::after{right:-300px;top:-300px}
-  .band-safety .spark{left:16px;bottom:40px}
-  .band-about .spark{right:20px;top:26px}
-  /* mobile banner: keep the arc light, add saturation (cobalt tint instead of grey) */
-  .banner-bg{background:linear-gradient(180deg,rgba(8,30,120,.34) 0%,rgba(6,22,92,.52) 45%,rgba(3,8,30,.88) 100%),url("../img/banner-arc.jpg") 58% 40%/cover no-repeat #04060C !important}
-}
 
-/* sweeping colour block (ref: flame-like blue extension) */
-.sweep{position:absolute;pointer-events:none;z-index:0;width:520px;height:1500px;border-radius:50%;filter:blur(40px);opacity:.95;
-  background:linear-gradient(180deg,rgba(3,5,11,0) 0%,rgba(20,60,200,.55) 38%,rgba(60,130,255,.55) 62%,rgba(170,210,255,.40) 82%,rgba(3,5,11,0) 100%)}
-.band-safety .sweep{left:-250px;top:-360px;transform:rotate(-16deg)}
-.band-about .sweep{right:-250px;top:-420px;transform:rotate(14deg)}
-.spark{display:none}
+/* ===== bands (試玩之前 / 關於我)：與首頁 Banner 同樣的光束背景 ===== */
+.band{position:relative;overflow:hidden;border-top:1px solid rgba(120,160,255,.16);border-bottom:1px solid rgba(120,160,255,.16)}
+.band-safety{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(3,8,30,.86) 0%,rgba(4,14,58,.66) 55%,rgba(8,30,120,.38) 100%),url("../img/banner-arc.jpg") 30% 40%/cover no-repeat #04060C}
+.band-about{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(3,8,30,.86) 0%,rgba(4,14,58,.66) 55%,rgba(8,30,120,.38) 100%),url("../img/banner-arc.jpg") 75% 60%/cover no-repeat #04060C}
+.band::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
+  linear-gradient(108deg,transparent calc(22% - .7px),rgba(175,210,255,.16) 22%,transparent calc(22% + .7px)),
+  linear-gradient(108deg,transparent calc(25% - .5px),rgba(175,210,255,.08) 25%,transparent calc(25% + .5px)),
+  linear-gradient(72deg,transparent calc(82% - .6px),rgba(175,210,255,.12) 82%,transparent calc(82% + .6px))}
+.band::after{content:none}
+.sweep,.spark{display:none}
 @media (max-width: 768px){
+  .band-safety,.band-about{background-size:cover;background-position:58% 40%}
+  .band-safety{background-image:linear-gradient(180deg,rgba(4,14,58,.78) 0%,rgba(3,8,30,.88) 60%,rgba(3,8,30,.92) 100%),url("../img/banner-arc.jpg")}
+  .band-about{background-image:linear-gradient(180deg,rgba(4,14,58,.78) 0%,rgba(3,8,30,.88) 60%,rgba(3,8,30,.92) 100%),url("../img/banner-arc.jpg")}
   .band::before{opacity:.6}
-  .band::after{width:820px;height:640px}
-  .band-safety::after{left:-460px;bottom:-380px}
-  .band-about::after{right:-460px;top:-360px}
-  .sweep{width:300px;height:900px;opacity:.55}
-  .band-safety .sweep{left:-230px;top:-200px}
-  .band-about .sweep{right:-230px;top:-260px}
+  .more-title{font-size:15px !important}
 }
+/* tables: vertically centred cells */
+article table th,article table td,#modal-overlay table th,#modal-overlay table td{vertical-align:middle !important}
