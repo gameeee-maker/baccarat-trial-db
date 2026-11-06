@@ -113,3 +113,8 @@ main > article,main > section{position:relative;z-index:1}
 }
 /* tables: vertically centred cells */
 article table th,article table td,#modal-overlay table th,#modal-overlay table td{vertical-align:middle !important}
+/* breadcrumb sits between H1 and meta line */
+.crumb{align-self:flex-start !important;margin-left:0 !important}
+/* all table cells centred */
+article table th,article table td,#modal-overlay table th,#modal-overlay table td{text-align:center !important}
+[hidden]{display:none !important}
