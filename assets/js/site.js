@@ -46,7 +46,7 @@
     if (!track) return;
     function step(dir) {
       var card = track.firstElementChild;
-      var w = card ? card.offsetWidth + 16 : 300;
+      var w = track.getAttribute('data-page') ? track.clientWidth + 14 : (card ? card.offsetWidth + 16 : 300);
       track.scrollBy({ left: dir * w, behavior: 'smooth' });
     }
     var p = document.getElementById(prevId), n = document.getElementById(nextId);
