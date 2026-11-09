@@ -198,3 +198,8 @@ button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightne
   28%{opacity:1;transform:translate(-1.5%,1.5%) scale(.96,.985) skew(2.5deg,-.8deg);border-radius:26px 44px 30px 22px}
   62%{opacity:.88;transform:translate(-12%,14%) scale(.52,.7) skew(9deg,-4deg) rotate(-2.5deg);border-radius:42% 58% 46% 30% / 32% 44% 58% 40%}
   100%{opacity:0;transform:translate(-26%,30%) scale(.05,.1) skew(15deg,-7deg) rotate(-6deg);border-radius:50%}}
+
+/* 遊戲截圖：限制顯示寬度，避免低解析直播畫面被放大而模糊 */
+figure.shot{width:100%;max-width:560px;margin:0 auto !important;align-self:center}
+.shot-grid{max-width:760px;width:100%;margin:0 auto;align-self:center}
+.shot-grid figure.shot{max-width:none}
