@@ -61,7 +61,7 @@
 /* banner readability without glow */
 .banner-bg{background:linear-gradient(90deg,rgba(10,36,130,.30) 0%,rgba(6,22,92,.42) 45%,rgba(2,6,26,.74) 100%),url("../img/banner-arc.jpg") 0% 38%/145% 118% no-repeat #04060C !important}
 @media (max-width: 768px){
-  .banner-bg{background:linear-gradient(180deg,rgba(2,4,12,.55) 0%,rgba(2,4,12,.70) 100%),url("../img/banner-arc.jpg") 0% 38%/cover no-repeat #04060C !important}
+  .banner-bg{background:linear-gradient(180deg,rgba(6,24,96,.28) 0%,rgba(4,16,72,.24) 50%,rgba(3,10,40,.60) 78%,rgba(2,6,26,.88) 100%),linear-gradient(165deg,#6E9BFF 0%,#3F78FF 40%,#1F4FD8 100%),url("../img/banner-arc.jpg") 0% 38%/cover no-repeat #04060C !important;background-blend-mode:normal,multiply,normal !important}
   table.tight{font-size:14px !important}
   table.tight th,table.tight td{padding:10px 8px !important}
   table.tight tbody th{white-space:nowrap}
@@ -198,3 +198,13 @@ button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightne
   28%{opacity:1;transform:translate(-1.5%,1.5%) scale(.96,.985) skew(2.5deg,-.8deg);border-radius:26px 44px 30px 22px}
   62%{opacity:.88;transform:translate(-12%,14%) scale(.52,.7) skew(9deg,-4deg) rotate(-2.5deg);border-radius:42% 58% 46% 30% / 32% 44% 58% 40%}
   100%{opacity:0;transform:translate(-26%,30%) scale(.05,.1) skew(15deg,-7deg) rotate(-6deg);border-radius:50%}}
+
+/* 文末作者卡片（手機版）：照片與姓名並排，簡介全寬，避免右側空白 */
+@media (max-width:768px){
+  aside[aria-label="作者資訊"]{display:grid !important;grid-template-columns:64px minmax(0,1fr);grid-template-areas:"pic name" "pic meta" "bio bio";column-gap:14px !important;row-gap:4px !important;align-items:center;padding:20px !important}
+  aside[aria-label="作者資訊"] > img{grid-area:pic;width:64px !important;height:64px !important;flex:none !important}
+  aside[aria-label="作者資訊"] > div{display:contents !important}
+  aside[aria-label="作者資訊"] > div > a{grid-area:name;align-self:end}
+  aside[aria-label="作者資訊"] > div > span:first-of-type{grid-area:bio;margin-top:12px}
+  aside[aria-label="作者資訊"] > div > span:last-of-type{grid-area:meta;align-self:start;font-size:13px !important;line-height:1.6}
+}
