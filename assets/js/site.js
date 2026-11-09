@@ -1,5 +1,76 @@
 (function () {
   'use strict';
+  var root = document.documentElement;
+  root.classList.add('fx-js');
+  var mqMobile = window.matchMedia('(max-width: 768px)');
+  var mqCalm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function animOK() { return mqMobile.matches && !mqCalm.matches; }
+
+  // ---------- 手機版進場動態 ----------
+  // 品牌卡片：每批進入畫面的卡片依序輕落；關於我按鈕淡入；試玩之前連結交錯滑入
+  (function () {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.brand-card'));
+    var groups = Array.prototype.slice.call(document.querySelectorAll('.band-about, .safety-links'));
+    cards.forEach(function (c, i) { c.style.setProperty('--r', (i % 2 ? 1 : -1) + 'deg'); });
+    groups.forEach(function (g) {
+      g.querySelectorAll(g.classList.contains('safety-links') ? '.safety-link' : '.fx-btn').forEach(function (el, i) { el.style.setProperty('--i', i); });
+    });
+    var all = cards.concat(groups);
+    if (!('IntersectionObserver' in window) || !animOK()) { all.forEach(function (el) { el.classList.add('fx-in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      var batch = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+      batch.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+      var n = 0;
+      batch.forEach(function (el) {
+        if (el.classList.contains('brand-card')) el.style.setProperty('--i', n++);
+        el.classList.add('fx-in'); io.unobserve(el);
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+    all.forEach(function (el) { io.observe(el); });
+  })();
+
+  // ---------- 補牌查詢工具 ----------
+  (function () {
+    var box = document.getElementById('draw-tool');
+    if (!box) return;
+    var selP = document.getElementById('dt-p'), selB = document.getElementById('dt-b'), selT = document.getElementById('dt-t');
+    var out = document.getElementById('dt-result'), hint = document.getElementById('dt-hint');
+    var NAME = { 1: 'A', 0: '10、J、Q、K' };
+    function step(name, chip, cls, why) {
+      return '<li class="dt-step is-new"><span class="dt-name">' + name + '</span><span class="dt-chip ' + cls + '">' + chip + '</span><span class="dt-why">' + why + '</span></li>';
+    }
+    function bankerRule(b, t) {
+      if (b <= 2) return [true, '莊家 0～2 點，不論閒家第三張是什麼都補牌。'];
+      if (b === 3) return [t !== 8, t === 8 ? '莊家 3 點，閒家第三張是 8，所以不補（莊 3 怕 8）。' : '莊家 3 點，只有閒家第三張是 8 才不補，這局要補牌。'];
+      if (b === 4) return [t >= 2 && t <= 7, '莊家 4 點，閒家第三張是 2～7 才補牌。'];
+      if (b === 5) return [t >= 4 && t <= 7, '莊家 5 點，閒家第三張是 4～7 才補牌。'];
+      if (b === 6) return [t === 6 || t === 7, '莊家 6 點，閒家第三張是 6 或 7 才補牌。'];
+      return [false, '莊家 7 點一律停牌。'];
+    }
+    function run() {
+      var p = +selP.value, b = +selB.value, t = +selT.value, html = '';
+      var natural = p >= 8 || b >= 8, pDraw = !natural && p <= 5;
+      selT.disabled = !pDraw;
+      hint.textContent = pDraw ? '' : (natural ? '天牌，雙方都不補牌' : '閒家停牌，不需要第三張');
+      if (natural) {
+        html = step('天牌判斷', '天牌', 'is-natural', '閒家 ' + p + ' 點、莊家 ' + b + ' 點。任一方前兩張是 8 或 9 點就是天牌，雙方都不補牌，直接比點數。') +
+          step('閒家', '不補', '', '出現天牌，閒家停牌。') + step('莊家', '不補', '', '出現天牌，莊家停牌。');
+      } else {
+        html = step('天牌判斷', '沒有天牌', '', '雙方前兩張都不是 8 或 9 點，接著依序判斷閒家、莊家是否補牌。');
+        if (pDraw) {
+          var br = bankerRule(b, t);
+          html += step('閒家', '補牌', 'is-draw', '閒家 0～5 點要補牌。補到 ' + (NAME[t] || t) + ' 之後，閒家變成 ' + ((p + t) % 10) + ' 點。');
+          html += step('莊家', br[0] ? '補牌' : '不補', br[0] ? 'is-draw' : '', br[1]);
+        } else {
+          html += step('閒家', '停牌', '', '閒家 6～7 點停牌，不補第三張。');
+          html += step('莊家', b <= 5 ? '補牌' : '不補', b <= 5 ? 'is-draw' : '', b <= 5 ? '閒家沒有補牌時，莊家和閒家規則相同：0～5 點補牌。' : '閒家沒有補牌時，莊家 6～7 點停牌。');
+        }
+      }
+      out.innerHTML = html;
+    }
+    [selP, selB, selT].forEach(function (s) { s.addEventListener('change', run); });
+    run();
+  })();
   // ---------- Mobile hamburger ----------
   var burger = document.querySelector('.nav-burger');
   var mnav = document.getElementById('mnav');
@@ -189,7 +260,7 @@
         '<tr style="border-top: 2px solid #3A5596; background: #0E1630;"><th scope="row" style="text-align: left; padding: 12px 16px; font-weight: 900;">總評分</th><td data-label="評分" style="padding: 12px 16px; font-weight: 900; white-space: nowrap;">' + esc(b.ratingText) + '</td><td data-label="說明" style="padding: 12px 16px; color: #C4CDDF;">我的綜合評分，詳見<a href="methodology/" style="color: #A9C6FF;">評測方法</a></td></tr></tbody></table></div>' +
       (pc ? '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px;">' + pc + '</div>' : '') +
       '<div class="cmt" data-limit=\"3\" data-more=\"' + esc(b.page) + '#comments-' + esc(b.id) + '\" data-brand="' + esc(b.id) + '" data-label="' + esc(b.label) + '" style="border-top: 1px solid #1D2945; padding-top: 20px; display: flex; flex-direction: column; gap: 12px;"></div>' +
-      '<a href="' + esc(b.page) + '" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border-radius: 999px; background: #2D63E6; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 700;">查看 ' + esc(b.label) + ' 完整試玩心得</a>' +
+      '<a class="fx-btn" href="' + esc(b.page) + '" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border-radius: 999px; background: #2D63E6; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 700;">查看 ' + esc(b.label) + ' 完整試玩心得</a>' +
     '</div>';
   }
   function open(id, trigger) {
@@ -197,16 +268,37 @@
     if (!b) return;
     lastFocus = trigger || document.activeElement;
     overlay.innerHTML = render(b);
+    closing = false;
+    overlay.classList.remove('fx-closing');
+    if (animOK()) overlay.classList.add('fx-open');
     overlay.hidden = false;
     document.body.style.overflow = 'hidden';
     var dlg = overlay.querySelector('[role="dialog"]');
     overlay.querySelectorAll('.cmt').forEach(mountComments);
     if (dlg) dlg.focus();
   }
-  function close() {
+  var closing = false;
+  function finishClose() {
     overlay.querySelectorAll('.cmt').forEach(function (el) { if (el._cmtCleanup) el._cmtCleanup(); });
-    overlay.hidden = true; overlay.innerHTML = ''; document.body.style.overflow = '';
+    overlay.classList.remove('fx-open', 'fx-closing');
+    overlay.hidden = true; overlay.innerHTML = ''; document.body.style.overflow = ''; closing = false;
     if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function close() {
+    if (closing || overlay.hidden) return;
+    var dlg = overlay.querySelector('[role="dialog"]');
+    if (!dlg || !animOK()) { finishClose(); return; }
+    closing = true;
+    // 收合點：對話框在畫面上可見範圍的左下角
+    var rect = dlg.getBoundingClientRect();
+    var oy = Math.max(0, Math.min(rect.height, window.innerHeight - rect.top - 24));
+    dlg.style.transformOrigin = '0px ' + oy + 'px';
+    overlay.classList.remove('fx-open');
+    overlay.classList.add('fx-closing');
+    var done = false;
+    function end(e) { if (done || (e && e.target !== dlg)) return; done = true; dlg.removeEventListener('animationend', end); finishClose(); }
+    dlg.addEventListener('animationend', end);
+    setTimeout(end, 650);
   }
   document.querySelectorAll('[data-open]').forEach(function (btn) { btn.addEventListener('click', function () { open(btn.getAttribute('data-open'), btn); }); });
   overlay.addEventListener('click', function (e) { if (e.target === overlay || e.target.closest('[data-close]')) close(); });

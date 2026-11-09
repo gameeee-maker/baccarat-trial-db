@@ -118,3 +118,83 @@ article table th,article table td,#modal-overlay table th,#modal-overlay table t
 /* all table cells centred */
 article table th,article table td,#modal-overlay table th,#modal-overlay table td{text-align:center !important}
 [hidden]{display:none !important}
+
+/* ===== 互動與動態（2026-11） ===== */
+.fx-card{position:relative;isolation:isolate}
+.fx-card::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;opacity:0;
+  background:linear-gradient(135deg,rgba(150,195,255,.18) 0%,rgba(45,99,230,.10) 38%,rgba(3,5,11,0) 72%);
+  background-size:240% 240%;background-position:100% 100%;transition:opacity .4s ease,background-position .7s cubic-bezier(.22,1,.36,1)}
+button,.fx-btn{transition:transform .18s cubic-bezier(.3,.7,.4,1),filter .25s ease,box-shadow .25s ease}
+button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightness(.92)}
+.fx-card:focus-visible,.fx-btn:focus-visible,button:focus-visible,.draw-tool select:focus-visible{outline:2px solid #A9C6FF;outline-offset:3px}
+
+/* 電腦版：卡片 Hover Lift + Scale + Subtle Gradient Shift */
+@media (hover:hover) and (pointer:fine){
+  .fx-card{transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease}
+  .fx-card:hover{border-color:rgba(130,175,255,.55) !important;box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 28px rgba(45,99,230,.20)}
+  .fx-card:hover::before{opacity:1;background-position:0% 0%}
+  button:hover:not(:disabled),.fx-btn:hover{filter:brightness(1.1);box-shadow:0 6px 18px rgba(45,99,230,.28)}
+  .tcar,#guide-track{padding:14px 8px 16px !important;margin:-10px -8px -6px !important;scroll-padding-left:8px}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .fx-card:hover{transform:translateY(-6px) scale(1.02)}
+}
+
+/* 補牌查詢工具 */
+.draw-tool{display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:18px;background:rgba(16,32,74,.55);border:1px solid #2A4489}
+.dt-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px}
+.dt-field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700;color:#DCE6F7}
+.dt-field select{height:46px;box-sizing:border-box;width:100%;padding:0 12px;border-radius:10px;border:1px solid #3A5596;background:#060A16;color:#E6EDFA;font-family:inherit;font-size:16px;cursor:pointer;transition:border-color .2s,opacity .2s}
+.dt-field select:disabled{opacity:.45;cursor:not-allowed}
+.dt-hint{font-size:13px;font-weight:400;color:#8D9AB3}
+.dt-hint:empty{display:none}
+.dt-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.dt-step{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"name chip" "why why";align-items:center;gap:6px 12px;padding:14px 16px;border-radius:14px;background:#0A1124;border:1px solid #1D2945}
+.dt-name{grid-area:name;font-family:'Noto Serif TC','Songti TC',serif;font-size:17px;font-weight:700;color:#E6EDFA}
+.dt-chip{grid-area:chip;justify-self:end;padding:4px 12px;border-radius:999px;font-size:14px;font-weight:700;background:#26334F;color:#DCE6F7}
+.dt-chip.is-draw{background:#2D63E6;color:#FFFFFF}
+.dt-chip.is-natural{background:#E8A317;color:#1A1203}
+.dt-why{grid-area:why;font-size:15px;line-height:1.75;color:#C4CDDF}
+.dt-note{margin:0;font-size:14px;line-height:1.7;color:#8D9AB3}
+.dt-step.is-new{animation:dt-in .35s ease both}
+@keyframes dt-in{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* 手機版動態（只在使用者沒有開啟「減少動態效果」時啟用） */
+@media (max-width:768px) and (prefers-reduced-motion:no-preference){
+  /* 首頁品牌卡片：逐張輕落、堆疊 */
+  html.fx-js .brand-card:not(.fx-in){opacity:0}
+  .brand-card.fx-in{animation:fx-drop .62s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--i,0) * 110ms)}
+  /* 關於我按鈕：淡入 */
+  html.fx-js .band-about:not(.fx-in) .fx-btn{opacity:0}
+  .band-about.fx-in .fx-btn{animation:fx-fade .7s ease backwards;animation-delay:calc(120ms + var(--i,0) * 140ms)}
+  /* 試玩之前：交錯滑入＋點擊回饋 */
+  html.fx-js .safety-links:not(.fx-in) .safety-link{opacity:0}
+  .safety-links.fx-in .safety-link{animation:fx-slide .55s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--i,0) * 90ms)}
+  .safety-link{transition:transform .16s ease,border-color .2s ease,box-shadow .2s ease}
+  .safety-link:active{transform:scale(.97);border-color:#5B8CFF !important;box-shadow:0 0 0 3px rgba(91,140,255,.22)}
+  /* 彈跳視窗 */
+  #modal-overlay.fx-open{animation:fx-backdrop-in .3s ease both}
+  #modal-overlay.fx-closing{animation:fx-backdrop-out .44s ease .06s both}
+  #modal-overlay.fx-open [role="dialog"]{animation:fx-pop .56s cubic-bezier(.2,.9,.3,1) both}
+  #modal-overlay.fx-closing [role="dialog"]{animation:fx-tissue .48s cubic-bezier(.55,.05,.4,1) both}
+}
+@keyframes fx-drop{
+  0%{opacity:0;transform:translateY(-26px) rotate(var(--r,-1deg)) scale(.985)}
+  55%{opacity:1;transform:translateY(3px) rotate(0) scale(1)}
+  78%{transform:translateY(-1px)}
+  100%{opacity:1;transform:none}}
+@keyframes fx-fade{from{opacity:0}to{opacity:1}}
+@keyframes fx-backdrop-in{from{background-color:rgba(2,3,10,0)}}
+@keyframes fx-backdrop-out{to{background-color:rgba(2,3,10,0)}}
+@keyframes fx-slide{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+@keyframes fx-pop{
+  0%{opacity:0;transform:translateY(14px) scale(.9)}
+  55%{opacity:1;transform:translateY(-2px) scale(1.02)}
+  78%{transform:translateY(0) scale(.996)}
+  100%{opacity:1;transform:none}}
+/* 柔性紙張抽吸：先微微起皺、拉長，再整張被吸向左下角 */
+@keyframes fx-tissue{
+  0%{opacity:1;transform:none;border-radius:22px}
+  28%{opacity:1;transform:translate(-1.5%,1.5%) scale(.96,.985) skew(2.5deg,-.8deg);border-radius:26px 44px 30px 22px}
+  62%{opacity:.88;transform:translate(-12%,14%) scale(.52,.7) skew(9deg,-4deg) rotate(-2.5deg);border-radius:42% 58% 46% 30% / 32% 44% 58% 40%}
+  100%{opacity:0;transform:translate(-26%,30%) scale(.05,.1) skew(15deg,-7deg) rotate(-6deg);border-radius:50%}}
