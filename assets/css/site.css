@@ -341,3 +341,25 @@ button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightne
 .msub a.msub-more{color:#8FB2FF;font-weight:700}
 /* 文章 H2 段落之間增加呼吸空間（只影響段落與段落之間，段落內部間距不變） */
 article[style*="gap: 28px"] > section[aria-labelledby]{margin-top:20px}
+
+/* FAQ 點擊展開 */
+.faq{display:flex;flex-direction:column;gap:10px}
+.faq-item{border:1px solid #1D2945;border-radius:14px;background:rgba(10,15,30,.78);transition:border-color .25s}
+.faq-item[open]{border-color:#2A4489;background:rgba(14,24,56,.78)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary h3{margin:0;font-family:'Noto Serif TC','Songti TC',serif;font-size:18px;line-height:1.5;font-weight:700;color:#E6EDFA}
+.faq-item summary::after{content:"";flex:none;width:9px;height:9px;margin-top:-5px;border-right:2px solid #8FB2FF;border-bottom:2px solid #8FB2FF;transform:rotate(45deg);transition:transform .25s ease,margin .25s ease}
+.faq-item[open] summary::after{transform:rotate(-135deg);margin-top:5px}
+.faq-item summary:hover h3{color:#FFFFFF}
+.faq-item summary:focus-visible{outline:2px solid #A9C6FF;outline-offset:-2px;border-radius:14px}
+.faq-a{padding:0 18px 18px}
+.faq-a p{margin:0;font-size:16px;line-height:1.9;color:#C4CDDF}
+.faq-a a{color:#A9C6FF}
+@media (prefers-reduced-motion:no-preference){.faq-item[open] .faq-a{animation:dt-in .3s ease both}}
+/* 醒目站內導流卡 */
+.callout-link{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-radius:16px;text-decoration:none;
+  background:linear-gradient(120deg,rgba(45,99,230,.30),rgba(14,40,120,.45));border:1px solid #3A64C8}
+.callout-kicker{font-size:13px;font-weight:700;letter-spacing:.12em;color:#A9C6FF}
+.callout-text{font-size:17px;line-height:1.8;color:#E6EDFA}
+.callout-go{font-size:15px;font-weight:700;color:#FFFFFF}
