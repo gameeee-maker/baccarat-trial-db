@@ -363,3 +363,18 @@ article[style*="gap: 28px"] > section[aria-labelledby]{margin-top:20px}
 .callout-kicker{font-size:13px;font-weight:700;letter-spacing:.12em;color:#A9C6FF}
 .callout-text{font-size:17px;line-height:1.8;color:#E6EDFA}
 .callout-go{font-size:15px;font-weight:700;color:#FFFFFF}
+
+/* 求助資源卡片 */
+.help-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+.help-card{display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:16px;background:rgba(10,15,30,.78);border:1px solid #2A4489}
+.help-tag{align-self:flex-start;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;color:#CFE0FF;background:rgba(45,99,230,.28)}
+.help-name{font-family:'Noto Serif TC','Songti TC',serif;font-size:21px;font-weight:700;line-height:1.4;color:#FFFFFF}
+.help-list{margin:0;padding-left:18px;font-size:15px;line-height:1.8;color:#C4CDDF;flex:1}
+.help-list strong{color:#FFD58A}
+.help-link{font-size:15px;font-weight:700;color:#A9C6FF;text-decoration:none}
+.help-link:hover{text-decoration:underline}
+
+/* 文章 H3：冰藍色＋左側漸層裝飾線，與下方正文間距 20px */
+article section > h3{position:relative;color:#9BDCFF !important;font-weight:700 !important;margin-bottom:4px !important}
+article section > h3::before{content:"";position:absolute;left:-14px;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:linear-gradient(180deg,#9BDCFF 0%,#2D63E6 100%)}
+@media (max-width:768px){article section > h3::before{left:-12px}}
