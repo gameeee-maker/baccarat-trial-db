@@ -95,8 +95,8 @@ main > article,main > section{position:relative;z-index:1}
 
 /* ===== bands (試玩之前 / 關於我)：與首頁 Banner 同樣的光束背景 ===== */
 .band{position:relative;overflow:hidden;border-top:1px solid rgba(120,160,255,.16);border-bottom:1px solid rgba(120,160,255,.16)}
-.band-safety{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(3,8,30,.86) 0%,rgba(4,14,58,.66) 55%,rgba(8,30,120,.38) 100%),url("../img/banner-arc.jpg") 30% 40%/cover no-repeat #04060C}
-.band-about{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(3,8,30,.86) 0%,rgba(4,14,58,.66) 55%,rgba(8,30,120,.38) 100%),url("../img/banner-arc.jpg") 75% 60%/cover no-repeat #04060C}
+.band-safety{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(3,8,30,.86) 0%,rgba(4,14,58,.66) 55%,rgba(8,30,120,.38) 100%),url("../img/banner-arc.webp") 30% 40%/cover no-repeat #04060C}
+.band-about{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(3,8,30,.86) 0%,rgba(4,14,58,.66) 55%,rgba(8,30,120,.38) 100%),url("../img/banner-arc.webp") 75% 60%/cover no-repeat #04060C}
 .band::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
   linear-gradient(108deg,transparent calc(22% - .7px),rgba(175,210,255,.16) 22%,transparent calc(22% + .7px)),
   linear-gradient(108deg,transparent calc(25% - .5px),rgba(175,210,255,.08) 25%,transparent calc(25% + .5px)),
@@ -105,8 +105,8 @@ main > article,main > section{position:relative;z-index:1}
 .sweep,.spark{display:none}
 @media (max-width: 768px){
   .band-safety,.band-about{background-size:cover;background-position:58% 40%}
-  .band-safety{background-image:linear-gradient(180deg,rgba(4,14,58,.78) 0%,rgba(3,8,30,.88) 60%,rgba(3,8,30,.92) 100%),url("../img/banner-arc.jpg")}
-  .band-about{background-image:linear-gradient(180deg,rgba(4,14,58,.78) 0%,rgba(3,8,30,.88) 60%,rgba(3,8,30,.92) 100%),url("../img/banner-arc.jpg")}
+  .band-safety{background-image:linear-gradient(180deg,rgba(4,14,58,.78) 0%,rgba(3,8,30,.88) 60%,rgba(3,8,30,.92) 100%),url("../img/banner-arc.webp")}
+  .band-about{background-image:linear-gradient(180deg,rgba(4,14,58,.78) 0%,rgba(3,8,30,.88) 60%,rgba(3,8,30,.92) 100%),url("../img/banner-arc.webp")}
   .band::before{opacity:.6}
   .more-title{font-size:15px !important}
 }
@@ -215,7 +215,7 @@ button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightne
   radial-gradient(ellipse 46% 58% at 92% 88%,rgba(126,176,255,.50) 0%,rgba(60,118,240,0) 70%),
   radial-gradient(ellipse 30% 40% at 70% 6%,rgba(110,160,255,.28) 0%,rgba(60,118,240,0) 70%),
   linear-gradient(115deg,#1F56D6 0%,#0E37A8 30%,#082577 58%,#06195A 100%)}
-.hero2::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:url("../img/banner-arc.jpg") 20% 40%/cover no-repeat;opacity:.22;mix-blend-mode:screen}
+.hero2::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:url("../img/banner-arc.webp") 20% 40%/cover no-repeat;opacity:.22;mix-blend-mode:screen}
 .hero2-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
 .hero2-glow{position:absolute;border-radius:50%;filter:blur(60px)}
 .hero2-glow-a{width:520px;height:360px;left:-160px;top:-140px;background:rgba(235,244,255,.55)}
@@ -288,7 +288,7 @@ button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightne
   radial-gradient(ellipse 34% 50% at 0% 98%,rgba(150,195,255,.45) 0%,rgba(80,135,245,0) 70%),
   radial-gradient(ellipse 46% 60% at 96% 92%,rgba(126,176,255,.45) 0%,rgba(60,118,240,0) 70%),
   linear-gradient(115deg,#1F56D6 0%,#0E37A8 30%,#082577 58%,#06195A 100%) !important;background-blend-mode:normal !important}
-.banner-bg::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:url("../img/banner-arc.jpg") 20% 40%/cover no-repeat;opacity:.2;mix-blend-mode:screen}
+.banner-bg::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:url("../img/banner-arc.webp") 20% 40%/cover no-repeat;opacity:.2;mix-blend-mode:screen}
 /* 區塊中央加一層深藍，讓置中的標題與卡片維持可讀 */
 .band-safety,.band-about{background:
   radial-gradient(ellipse 58% 62% at 50% 50%,rgba(5,16,62,.62) 0%,rgba(5,16,62,.30) 55%,rgba(5,16,62,0) 80%),
