@@ -378,3 +378,11 @@ article[style*="gap: 28px"] > section[aria-labelledby]{margin-top:20px}
 article section > h3{position:relative;color:#9BDCFF !important;font-weight:700 !important;margin-bottom:4px !important}
 article section > h3::before{content:"";position:absolute;left:-14px;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:linear-gradient(180deg,#9BDCFF 0%,#2D63E6 100%)}
 @media (max-width:768px){article section > h3::before{left:-12px}}
+
+/* 首頁「試玩之前」「關於我」：上下以漸層淡入淡出，與相鄰區塊無縫銜接 */
+.band-safety,.band-about{border-top:0 !important;border-bottom:0 !important}
+.hz-band::before,.hz-band::after{content:"";position:absolute;left:0;right:0;z-index:1;pointer-events:none;height:clamp(90px,14vw,180px)}
+.hz-band::before{top:0;background:linear-gradient(180deg,#03050B 0%,rgba(3,5,11,.72) 35%,rgba(3,5,11,0) 100%)}
+.hz-band::after{bottom:0;background:linear-gradient(0deg,#03050B 0%,rgba(3,5,11,.72) 35%,rgba(3,5,11,0) 100%)}
+.band-about .hz-band::after{background:linear-gradient(0deg,#071330 0%,rgba(7,19,48,.72) 35%,rgba(7,19,48,0) 100%)}
+.band::before{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 82%,transparent 100%)}
