@@ -336,3 +336,8 @@ button:active:not(:disabled),.fx-btn:active{transform:scale(.95);filter:brightne
   .hero2-main{width:124px;right:-26px;top:-8px;bottom:auto;animation:none}
   .far-2,.far-5{display:none}
 }
+
+/* 手機選單「查看更多」 */
+.msub a.msub-more{color:#8FB2FF;font-weight:700}
+/* 文章 H2 段落之間增加呼吸空間（只影響段落與段落之間，段落內部間距不變） */
+article[style*="gap: 28px"] > section[aria-labelledby]{margin-top:20px}
