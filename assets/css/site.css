@@ -386,3 +386,32 @@ article section > h3::before{content:"";position:absolute;left:-14px;top:.2em;bo
 .hz-band::after{bottom:0;background:linear-gradient(0deg,#03050B 0%,rgba(3,5,11,.72) 35%,rgba(3,5,11,0) 100%)}
 .band-about .hz-band::after{background:linear-gradient(0deg,#071330 0%,rgba(7,19,48,.72) 35%,rgba(7,19,48,0) 100%)}
 .band::before{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 82%,transparent 100%)}
+
+/* 法規頁「常見誤解」：誤解與實際分行、分色 */
+.myth-box{display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:16px;background:rgba(16,32,74,.55);border:1px solid #2A4489}
+.myth-title{font-weight:700;color:#C9DBFF}
+.myth{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:12px;background:rgba(6,12,32,.6);border:1px solid #1D2945}
+.myth-q,.myth-a{margin:0;display:flex;align-items:flex-start;gap:10px;font-size:16px;line-height:1.75}
+.myth-q{color:#B4C0D6}
+.myth-a{color:#F2F6FF;font-weight:500}
+.myth-tag{flex:none;margin-top:2px;padding:1px 9px;border-radius:999px;font-size:13px;font-weight:700;line-height:1.7}
+.myth-tag.is-no{background:rgba(232,96,96,.18);color:#FFB3B3;border:1px solid rgba(232,96,96,.4)}
+.myth-tag.is-yes{background:rgba(91,140,255,.22);color:#CFE0FF;border:1px solid rgba(91,140,255,.5)}
+
+/* 全站表格：奇偶列分色；說明文字移到表格下方 */
+table tbody tr:nth-child(even){background-color:rgba(120,160,255,.07)}
+table caption{caption-side:bottom !important;padding:10px 14px 12px !important;text-align:left}
+
+/* 求助卡片懸浮 */
+.help-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .35s ease,background-color .35s ease}
+.help-tag,.help-name{transition:background-color .35s ease,color .35s ease}
+@media (hover:hover) and (pointer:fine){
+  .help-card:hover{border-color:#6E9BFF;background-color:rgba(20,40,92,.88);box-shadow:0 16px 36px rgba(0,0,0,.42),0 0 26px rgba(91,140,255,.28)}
+  .help-card:hover .help-tag{background-color:rgba(91,140,255,.5);color:#FFFFFF}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.help-card:hover{transform:translateY(-6px)}}
+
+/* 卡片內的文字按鈕靠右（置中排版的卡片除外） */
+.help-link,.callout-go{align-self:flex-end}
+.fx-card .arrow-link{align-self:flex-end}
+.more-card .arrow-link,.brand-card .arrow-link{align-self:center}
