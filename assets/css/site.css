@@ -1,3 +1,6 @@
+/* 自架中文字型（依全站用字子集化，可變字重） */
+@font-face{font-family:'Noto Sans TC';font-style:normal;font-weight:400 700;font-display:swap;src:url('../fonts/noto-sans-tc-sub.woff2') format('woff2')}
+@font-face{font-family:'Noto Serif TC';font-style:normal;font-weight:700 900;font-display:swap;src:url('../fonts/noto-serif-tc-sub.woff2') format('woff2')}
 /* ===== 百家樂試玩資料庫｜RWD 與共用樣式 ===== */
 .nav-burger{display:none}
 .mnav[hidden]{display:none !important}
