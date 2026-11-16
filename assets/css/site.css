@@ -450,3 +450,7 @@ table caption{caption-side:bottom !important;padding:10px 14px 12px !important;t
 .warn-bar{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .warn-short{display:none}
 @media (max-width:640px){.warn-full{display:none}.warn-short{display:inline}}
+@media (max-width:374px){
+  div:has(> .warn-bar){padding-left:14px !important;padding-right:14px !important}
+  .warn-bar{font-size:12px;letter-spacing:-.01em}
+}
