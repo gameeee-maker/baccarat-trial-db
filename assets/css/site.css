@@ -418,3 +418,30 @@ table caption{caption-side:bottom !important;padding:10px 14px 12px !important;t
 .help-link,.callout-go{align-self:flex-end}
 .fx-card .arrow-link{align-self:flex-end}
 .more-card .arrow-link,.brand-card .arrow-link{align-self:center}
+
+/* ===== Hero 進場動畫：黑幕由右下往左上褪去 → 文字依序浮現 → 素材淡入 ===== */
+@media (prefers-reduced-motion:no-preference){
+  /* 1. 黑幕：柔邊斜向遮罩，由右下角開始褪去，掃向左上 */
+  .hero2::after,.banner-bg::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:#03050B;
+    -webkit-mask-image:linear-gradient(135deg,#000 0%,#000 42%,transparent 58%,transparent 100%);mask-image:linear-gradient(135deg,#000 0%,#000 42%,transparent 58%,transparent 100%);
+    -webkit-mask-size:300% 300%;mask-size:300% 300%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    animation:hz-veil 1s cubic-bezier(.55,.1,.3,1) both}
+  .hero2-inner,.banner-bg > div:last-child{z-index:1}
+  /* 2. 文字：淡入＋輕微上浮，依序出現 */
+  .hero2-text > *,.banner-bg > div:last-child > *{animation:hz-rise .7s cubic-bezier(.22,1,.36,1) both}
+  .hero2-text > .hero2-frame{animation-name:hz-fade;animation-duration:1s;animation-delay:.75s}
+  .hero2-text > :nth-child(2),.banner-bg > div:last-child > :nth-child(1){animation-delay:.3s}
+  .hero2-text > :nth-child(3),.banner-bg > div:last-child > :nth-child(2){animation-delay:.42s}
+  .hero2-text > :nth-child(4),.banner-bg > div:last-child > :nth-child(3){animation-delay:.54s}
+  .hero2-text > :nth-child(5),.banner-bg > div:last-child > :nth-child(4){animation-delay:.66s}
+  .hero2-text > :nth-child(6){animation-delay:.78s}
+  /* 3. 素材：文字之後淡入 */
+  .hero2-chip,.hero2-main img,.hero2-far,.hero2-word,.hero2-lines,.hz-inner .hz-far,.hz-inner .hz-main img{animation:hz-fade .9s ease both}
+  .hero2-far,.hero2-word,.hero2-lines,.hz-inner .hz-far{animation-delay:.7s}
+  .hero2-chip,.hz-inner .hz-main img{animation:hz-pop 1s cubic-bezier(.22,1,.36,1) .85s both}
+  .hero2-main img{animation:hz-pop 1s cubic-bezier(.22,1,.36,1) 1s both}
+}
+@keyframes hz-veil{from{-webkit-mask-position:0% 0%;mask-position:0% 0%}to{-webkit-mask-position:100% 100%;mask-position:100% 100%}}
+@keyframes hz-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes hz-fade{from{opacity:0}}
+@keyframes hz-pop{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
