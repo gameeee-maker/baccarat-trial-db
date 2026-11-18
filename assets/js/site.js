@@ -304,3 +304,14 @@
   overlay.addEventListener('click', function (e) { if (e.target === overlay || e.target.closest('[data-close]')) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
 })();
+
+// 詐騙FAQ：從其他頁面以 #q 錨點連入時，自動展開對應問題
+(function () {
+  function openFromHash() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = id && document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; el.scrollIntoView({ block: 'start' }); }
+  }
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+})();
