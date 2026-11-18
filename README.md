@@ -1,6 +1,6 @@
 # 百家樂試玩資料庫｜靜態網站
 
-網址：https://gameeee-maker.github.io/baccarat-trial-db/
+網址：https://gameeee-maker.github.io/
 
 ## 結構
 - `/`：首頁（下拉選單、快速查看視窗、教學輪轉卡片）

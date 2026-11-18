@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gameeee-maker.github.io/baccarat-trial-db/sitemap.xml
+Sitemap: https://gameeee-maker.github.io/sitemap.xml
